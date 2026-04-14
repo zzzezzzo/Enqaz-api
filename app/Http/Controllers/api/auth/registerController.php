@@ -17,9 +17,9 @@ class registerController extends Controller
             'name' => 'required|string|max:255',
             'email' => 'required|string|email|max:255|unique:users',
             'password' => 'required|string|min:8|confirmed',
-            'phone' => 'required|string|max:15|unique:users',
+            'phone' => 'string|max:15|unique:users',
             'role_id' => 'integer|exists:roles,id',
-            'is_active' => 'required|boolean'
+            'is_active' => 'boolean'
         ]);
 
         try {
@@ -27,9 +27,9 @@ class registerController extends Controller
                 'name' => $request->name,
                 'email' => $request->email,
                 'password' => bcrypt($request->password),
-                'phone' => $request->phone,
+                'phone' => $request->phone?? null,
                 'role_id' => $request->role_id ?? 2, // Default to 'customer' role
-                'is_active' => $request->is_active
+                'is_active' => $request->is_active ?? true
             ]);
 
             $token = JWTAuth::fromUser($user);

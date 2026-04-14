@@ -16,6 +16,22 @@ use Illuminate\Support\Facades\Auth;
 
 class ServiceRequestController extends Controller
 {
+    public function index(){
+        $serviceRequests = ServiceRequest::where('customer_id', Auth::user()->id)
+            ->with([
+                'provider:id,name,email,phone',
+                'vehicle:id,plate_number,model,brand',
+                'service:id,name,description',
+                'status:id,name'
+            ])
+            ->get();
+
+        return response()->json([
+            'success' => true,
+            'message' => 'Service requests retrieved successfully',
+            'data' => $serviceRequests
+        ], 200);
+    }
     public function store(StoreServiceRequest $request){
         $validate = $request->validated();
         

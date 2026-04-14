@@ -9,6 +9,11 @@ use Illuminate\Http\Request;
 
 class vehicleController extends Controller
 {
+
+    public function index(Request $request){
+        $vehicles = Vehicle::where('user_id', Auth::id())->get();
+        return response()->json(['vehicles'=> $vehicles], 200);
+    }
     public function store(Request $request)
     {
         $request->validate([
