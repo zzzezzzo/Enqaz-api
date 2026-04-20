@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\StoreProviderProfileRequest;
 use App\Models\ProviderProfile;
 use App\Models\ProviderService;
+use App\Models\Service;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use NunoMaduro\Collision\Provider;
@@ -106,6 +107,13 @@ class profileController extends Controller
                 'error' => $e->getMessage()
             ], 500);
         }
+    }
+    public function getAllServices(){
+        $services = Service::all(['id', 'name']);
+        return response()->json([
+            'message' => 'Services retrieved successfully',
+            'data' => $services
+        ], 200);
     }
 
 }

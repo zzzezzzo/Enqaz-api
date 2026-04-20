@@ -37,7 +37,7 @@ class CustomerCreateRequest implements ShouldBroadcastNow
     public function broadcastOn(): array
     {
         return [
-            new Channel('provider.'.$this->serviceRequest->provider_id),
+            new PrivateChannel('provider.'.$this->serviceRequest->provider_id),
         ];
     }
     
