@@ -46,4 +46,12 @@ class loginController extends Controller
             return response()->json(['error' => 'Could not refresh token'], 500);
         }
     }
+    public function me()
+    {
+        $response = [
+            'message' => 'User details retrieved successfully',
+            'user' => auth()->user()
+        ];
+        return response()->json($response);
+    }
 }

@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\ProviderProfile;
 use App\Models\ProviderService;
 use App\Models\ServiceRequest;
+use Auth;
 use Illuminate\Http\Request;
 
 class DashboardController extends Controller
@@ -66,7 +67,7 @@ class DashboardController extends Controller
             ];
         });
         return [
-            'provider_id' => $provider->id,
+            'provider_id' => Auth::id(),
             'workShop_location'=>[
                 'latitude' => $lat,
                 'longitude' => $lng

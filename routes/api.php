@@ -13,4 +13,8 @@ Route::middleware('guest:api')->group(function () {
     Route::post('/login', [loginController::class, 'login'])->name('login');
     Route::post('/refresh', [loginController::class, 'refresh'])->name('refresh');
     Route::post('/logout', [logoutController::class, 'logout'])->name('logout');
-});
+    // Route::get('/me', [loginController::class, 'me'])->name('me');
+    });
+    Route::middleware('auth:api')->group(function () {
+    Route::get('/me', [loginController::class, 'me'])->name('me');
+    }); 
