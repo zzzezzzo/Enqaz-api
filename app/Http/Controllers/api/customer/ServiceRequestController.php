@@ -5,6 +5,7 @@ namespace App\Http\Controllers\api\customer;
 use App\Events\CustomerCreateRequest;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\StoreServiceRequest;
+use App\Models\Rating;
 use App\Models\ServiceRequest;
 use App\Models\RequestStatus;
 use App\Models\User;
@@ -23,7 +24,7 @@ class ServiceRequestController extends Controller
                 'vehicle:id,plate_number,model,brand',
                 'service:id,name,description',
                 'status:id,name'
-            ])
+            ])->whereDoesntHave('ratings')
             ->get();
 
         return response()->json([
@@ -64,5 +65,30 @@ class ServiceRequestController extends Controller
             'message' => 'Service request created successfully',
             'data' => $serviceRequest
         ], 201);
+    }
+    public function rate(Request $request, $id){
+        $serviceRequest = ServiceRequest::find($id);
+        if(!$serviceRequest || $serviceRequest->customer_id != Auth::user()->id){
+            return response()->json([
+                'success' => false,
+                'message' => 'Service request not found'
+            ], 404);
+        }
+        $request->validate([
+            'rating' => 'required|integer|min:1|max:5',
+            'comment' => 'nullable|string'
+        ]);
+        Rating::create([
+            'service_request_id' => $serviceRequest->id,
+            'provider_id' => $serviceRequest->provider_id,
+            'customer_id' => Auth::user()->id,
+            'rating' => $request->rating,
+            'comment' => $request->comment
+        ]);
+        return response()->json([
+            'success' => true,
+            'message' => 'Service request rated successfully',
+            'data' => $serviceRequest
+        ], 200);
     }
 }

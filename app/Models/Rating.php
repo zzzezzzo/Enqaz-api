@@ -7,8 +7,9 @@ use Illuminate\Database\Eloquent\Model;
 class Rating extends Model
 {
     protected $fillable = [
+        'service_request_id',
+        'customer_id',
         'provider_id',
-        'user_id',
         'rating',
         'comment',
     ];
@@ -20,6 +21,6 @@ class Rating extends Model
 
     public function user()
     {
-        return $this->belongsTo(User::class, 'user_id');
+        return $this->belongsTo(User::class, 'customer_id');
     }
 }

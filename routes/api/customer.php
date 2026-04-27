@@ -21,4 +21,6 @@ Route::middleware('auth:api')->group(function () {
     // select the needed service 
     Route::get('/service-requests',[ServiceRequestController::class,'index'])->name('customer.serviceRequest.index');
     Route::post('/service-requests', [ServiceRequestController::class, 'store'])->name('customer.serviceRequest.store');
+    // route to make customer give the service requests a rating 
+    Route::post('/service-requests/{id}/rating', [ServiceRequestController::class, 'rate'])->name('customer.serviceRequest.rate');
 });

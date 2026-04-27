@@ -7,6 +7,7 @@ use App\Http\Controllers\api\provider\ProviderServiceRequest;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
+Route::get('/services', [profileController::class, 'getAllServices'])->name('provider.services.index');
 
 Route::middleware(['auth:api','role:provider'])->group(function(){
     // Route for provider profile management
@@ -15,7 +16,6 @@ Route::middleware(['auth:api','role:provider'])->group(function(){
     Route::get('/profile/edit', [profileController::class, 'editProfile'])->name('provider.profile.edit');
     Route::put('/profile', [profileController::class, 'updateProfile'])->name('provider.profile.update');
     // route to get the service to can the porvider serve it 
-    Route::get('/services', [profileController::class, 'getAllServices'])->name('provider.services.index');
     // get the dashboard of the provider 
     
     Route::get('/dashboard',[DashboardController::class, 'index'])->name('provider.dashboard.index');

@@ -40,7 +40,7 @@ class profileController extends Controller
                 'description' => $request->description,
                 'latitude' => $request->latitude,
                 'longitude' => $request->longitude,
-                'is_available' => true, // Default to available when creating a profile
+                'is_available' => false, // Default to available when creating a profile
             ]);
             // record the services provided by the provider 
             foreach($request->services as $service){
@@ -109,7 +109,7 @@ class profileController extends Controller
         }
     }
     public function getAllServices(){
-        $services = Service::all(['id', 'name']);
+        $services = Service::where('is_active', true)->get();
         return response()->json([
             'message' => 'Services retrieved successfully',
             'data' => $services

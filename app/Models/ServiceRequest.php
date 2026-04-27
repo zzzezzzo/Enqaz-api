@@ -41,4 +41,8 @@ class ServiceRequest extends Model
     {
         return $this->belongsTo(RequestStatus::class, 'status_id');
     }
+    public function ratings()
+    {
+        return $this->hasOne(Rating::class, 'service_request_id');
+    }
 }

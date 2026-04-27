@@ -9,6 +9,7 @@ class Service extends Model
     protected $fillable = [
         'name',
         'description',
+        'is_active'
     ];
 
     public function providers()
