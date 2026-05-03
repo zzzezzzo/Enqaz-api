@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\api\admin\DashboardController;
 use App\Http\Controllers\api\admin\ProfileController;
 use App\Http\Controllers\api\admin\ServiceController;
 use App\Http\Controllers\api\admin\WorkShopController;
@@ -22,4 +23,6 @@ Route::middleware(['auth:api','role:admin'])->group(function(){
     Route::get('/profile', [ProfileController::class, 'index'])->name('admin.profile.index');
     Route::post('/profile', [ProfileController::class, 'store'])->name('admin.profile.store');
     Route::get('/admins', [ProfileController::class, 'indexAdmins'])->name('admin.admins.index');
+    // Route to the admin dashboard 
+    Route::get('/dashboard', [DashboardController::class, 'index'])->name('admin.dashboard.index');
 });
