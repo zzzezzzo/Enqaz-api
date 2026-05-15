@@ -41,6 +41,8 @@ class profileController extends Controller
                 'latitude' => $request->latitude,
                 'longitude' => $request->longitude,
                 'is_available' => false, // Default to available when creating a profile
+                'opening_time' => $request->opening_time,
+                'closing_time' => $request->closing_time,
             ]);
             // record the services provided by the provider 
             foreach($request->services as $service){
@@ -90,6 +92,8 @@ class profileController extends Controller
                 'description' => $request->description,
                 'latitude' => $request->latitude,
                 'longitude' => $request->longitude,
+                'opening_time' => $request->opening_time,
+                'closing_time' => $request->closing_time,
             ]);
             $profile->services()->sync($request->services);
             DB::commit();

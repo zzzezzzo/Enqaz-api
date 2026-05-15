@@ -14,6 +14,8 @@ class ProviderProfile extends Model
         'longitude',
         'is_available',
         'average_rating',
+        'opening_time', 
+        'closing_time',
     ];
 
     public function user()

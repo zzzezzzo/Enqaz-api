@@ -7,4 +7,7 @@ Broadcast::channel('App.Models.User.{id}', function ($user, $id) {
 });
 Broadcast::channel('provider.{providerId}', function($user, $providerId){
     return (int) $user->id === (int) $providerId;
-});             
+});  
+Broadcast::channel('tracking.{trackingId}',function($user, $trackingId){
+    return (int) $user->id === (int) $trackingId;
+});

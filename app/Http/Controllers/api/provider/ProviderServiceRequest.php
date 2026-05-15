@@ -7,6 +7,7 @@ use App\Http\Controllers\Controller;
 use App\Models\ProviderProfile;
 use App\Models\RequestStatus;
 use App\Models\ServiceRequest;
+use App\Models\TrackingSession;
 
 use App\Models\ServiceRequestLog;
 use Illuminate\Support\Facades\Auth;
@@ -82,6 +83,19 @@ class ProviderServiceRequest extends Controller
                 'changed_by' => Auth::id(),
                 'comment' => "Status changed to {$request->status} by provider"
             ]);
+            if($request->status === 'accepted'){
+                TrackingSession::create([
+                    'service_request_id' => $serviceRequest->id,
+                    'provider_id' => Auth::id(),
+                    'started_at' => now()
+                ]);
+            } elseif($request->status === 'completed'){
+                $trackingSession = TrackingSession::where('service_request_id', $serviceRequest->id)->first();
+                if($trackingSession){
+                    $trackingSession->ended_at = now();
+                    $trackingSession->save();
+                }
+            }
             DB::commit();
             return response()->json([
                 'message' => 'Service request status updated successfully'

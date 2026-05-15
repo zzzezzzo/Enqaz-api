@@ -10,7 +10,7 @@ use Illuminate\Http\Request;
 class nearestProviderController extends Controller
 {
     public function index(Request $request){
-        // dd($request->all());    
+  
         // $latitude =$request->latitude;
         $latitude = $request->query('Latitude', $request->input('latitude'));
         $longitude = $request->query('longitude', $request->input('longitude'));

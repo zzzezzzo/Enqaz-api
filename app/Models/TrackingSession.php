@@ -9,8 +9,9 @@ class TrackingSession extends Model
     protected $fillable = [
         'service_request_id',
         'provider_id',
-        'start_time',
-        'end_time',
+        'started_at',
+        'ended_at',
+        
     ];
 
     public function serviceRequest()
