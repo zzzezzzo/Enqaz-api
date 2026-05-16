@@ -113,4 +113,16 @@ class ProviderServiceRequest extends Controller
         $status = RequestStatus::where('name', $statusName)->firstOrFail();
         return $status->id;
     }
+    public function assignMechanic(Request $request, $id){
+        $request->validate([
+            'mechanic_id' => 'required|exists:workshop_mechanics,id'
+        ]);
+        $serviceRequest = ServiceRequest::findOrFail($id);
+        $serviceRequest->assigned_mechanic_id = $request->mechanic_id;
+        $serviceRequest->dispatch_status = 'assigned';
+        $serviceRequest->save();
+        return response()->json([
+            'message' => 'Mechanic assigned successfully'
+        ], 200);
+    }
 }

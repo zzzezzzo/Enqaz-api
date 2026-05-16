@@ -5,6 +5,8 @@ use App\Http\Controllers\api\auth\loginController;
 use App\Http\Controllers\api\auth\logoutController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
+require __DIR__.'/customer.php';
+require __DIR__.'/mechanic.php';
 
 /****************** AUTH ******************/
 

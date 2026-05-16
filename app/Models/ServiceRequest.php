@@ -15,6 +15,10 @@ class ServiceRequest extends Model
         'longitude',
         'description',
         'status_id',
+        'assigned_mechanic_id',
+        'dispatch_status',
+        'mechanic_latitude',
+        'mechanic_longitude',
     ];
 
     public function customer()
@@ -45,4 +49,9 @@ class ServiceRequest extends Model
     {
         return $this->hasOne(Rating::class, 'service_request_id');
     }
+    public function assignedMechanic()
+    {
+        return $this->belongsTo(WorkshopMechanic::class, 'assigned_mechanic_id');
+    }
+    
 }
