@@ -21,9 +21,12 @@ class LocationUpdated
     /**
      * Create a new event instance.
      */
-    public function __construct()
+    public function __construct($trackingId, $latitude, $longitude)
     {
-        //
+        $this->trackingId = $trackingId;
+        $this->latitude = $latitude;
+        $this->longitude = $longitude;
+
     }
 
     /**

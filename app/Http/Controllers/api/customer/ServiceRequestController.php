@@ -38,16 +38,34 @@ class ServiceRequestController extends Controller
         
         // Get pending status ID
         $pendingStatus = RequestStatus::where('name', 'pending')->first();
-        $serviceRequest = ServiceRequest::create([
-            'customer_id' => Auth::user()->id,
-            'provider_id' => $validate['provider_id'],
-            'vehicle_id' => $validate['vehicle_id'],
-            'service_id' => $validate['service_id'],
-            'latitude' => $validate['latitude'],
-            'longitude' => $validate['longitude'],
-            'description' => $validate['description'],
-            'status_id' => $pendingStatus->id
-        ]);
+        if($validate['requestTiming'] == 'scheduled'){
+            $serviceRequest = ServiceRequest::create([
+                'customer_id' => Auth::user()->id,
+                'provider_id' => $validate['provider_id'],
+                'vehicle_id' => $validate['vehicle_id'],
+                'service_id' => $validate['service_id'],
+                'latitude' => $validate['latitude'],
+                'longitude' => $validate['longitude'],
+                'description' => $validate['description'],
+                'request_type' => $validate['request_type'],
+                'scheduled_date' => $validate['scheduled_date'],
+                'scheduled_starts_at' => $validate['scheduled_starts_at'],
+                'scheduled_ends_at' => $validate['scheduled_ends_at'],
+                'status_id' => $pendingStatus->id
+            ]);
+        }else{
+            $serviceRequest = ServiceRequest::create([
+                'customer_id' => Auth::user()->id,
+                'provider_id' => $validate['provider_id'],
+                'vehicle_id' => $validate['vehicle_id'],
+                'service_id' => $validate['service_id'],
+                'latitude' => $validate['latitude'],
+                'longitude' => $validate['longitude'],
+                'description' => $validate['description'],
+                'request_type' => $validate['request_type'],
+                'status_id' => $pendingStatus->id
+            ]);
+        }
 
 
         // Load relationships for response

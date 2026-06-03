@@ -20,7 +20,6 @@ return new class extends Migration
             // من – إلى (24 ساعة في DB)
             $table->time('scheduled_starts_at')->nullable()->after('scheduled_date');
             $table->time('scheduled_ends_at')->nullable()->after('scheduled_starts_at');
-            $table->index(['provider_id', 'scheduled_date', 'scheduled_starts_at']);
         });
     }
 

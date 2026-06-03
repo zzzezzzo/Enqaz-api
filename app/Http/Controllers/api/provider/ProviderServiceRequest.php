@@ -8,6 +8,7 @@ use App\Models\ProviderProfile;
 use App\Models\RequestStatus;
 use App\Models\ServiceRequest;
 use App\Models\TrackingSession;
+use App\Models\WorkshopMechanic;
 
 use App\Models\ServiceRequestLog;
 use Illuminate\Support\Facades\Auth;
@@ -54,6 +55,9 @@ class ProviderServiceRequest extends Controller
                 'customer_name' => $req->customer?->name,
                 'description' => $req->description,
                 'service_name' => $req->service?->name,
+                'scheduled_date' => $req->scheduled_date,
+                'scheduled_starts_at' => $req->scheduled_starts_at,
+                'scheduled_ends_at' => $req->scheduled_ends_at,
                 'distance' => round($req->distance, 2) . ' km',
                 'minutes_ago' => $req->created_at
                     ? now()->diffInMinutes($req->created_at) . ' min'
@@ -117,6 +121,10 @@ class ProviderServiceRequest extends Controller
         $request->validate([
             'mechanic_id' => 'required|exists:workshop_mechanics,id'
         ]);
+        // update the mechainc in jop and change the status to assigned
+        $mechanic = WorkshopMechanic::findOrFail($request->mechanic_id); // ensure mechanic exists
+        $mechanic->status = 'in_job';
+        $mechanic->save();
         $serviceRequest = ServiceRequest::findOrFail($id);
         $serviceRequest->assigned_mechanic_id = $request->mechanic_id;
         $serviceRequest->dispatch_status = 'assigned';

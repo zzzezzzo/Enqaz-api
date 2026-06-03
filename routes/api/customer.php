@@ -3,6 +3,7 @@
 use App\Http\Controllers\api\customer\nearestProviderController;
 use App\Http\Controllers\api\customer\ServiceRequestController;
 use App\Http\Controllers\api\customer\vehicleController;
+use App\Http\Controllers\api\customer\workshopController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -23,4 +24,6 @@ Route::middleware('auth:api')->group(function () {
     Route::post('/service-requests', [ServiceRequestController::class, 'store'])->name('customer.serviceRequest.store');
     // route to make customer give the service requests a rating 
     Route::post('/service-requests/{id}/rating', [ServiceRequestController::class, 'rate'])->name('customer.serviceRequest.rate');
+    // route to get the opening houres of the provider
+    Route::get('workshop/{providerId}', [WorkshopController::class, 'show'])->name('customer.workshop.show');
 });

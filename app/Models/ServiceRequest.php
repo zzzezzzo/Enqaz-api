@@ -19,6 +19,9 @@ class ServiceRequest extends Model
         'dispatch_status',
         'mechanic_latitude',
         'mechanic_longitude',
+        'scheduled_date',
+        'scheduled_starts_at',
+        'scheduled_ends_at',
     ];
 
     public function customer()
